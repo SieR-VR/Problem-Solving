@@ -45,6 +45,9 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "sstream": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "map": "cpp",
+        "xtree": "cpp",
+        "set": "cpp"
     }
 }
