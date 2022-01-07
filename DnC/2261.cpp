@@ -1,52 +1,64 @@
 #include <iostream>
-#include <map>
 #include <vector>
-#include <algorithm>
+#include <set>
 #include <cmath>
+#include <algorithm>
 
-int getLength(const std::pair<int, int> &p1, const std::pair<int, int> &p2) {
-    return (p2.first - p1.first) * (p2.first - p1.first) + (p2.second - p1.second) * (p2.second - p1.second);
+struct Point
+{
+    int x, y;
+
+    bool operator<(const Point &other) const {
+        if (y == other.y) return x < other.x;
+        else return y < other.y;
+    }
+};
+
+int dist(const Point &p1, const Point &p2)
+{
+    return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
 }
 
-int main() {
+int main()
+{
     int n;
     std::cin >> n;
 
-    std::vector<std::pair<int, int>> v(n);
-    std::map<int, int> m;
-    for(int i = 0; i < n; i++) {
-        int ts1, ts2;
-        std::cin >> ts1 >> ts2;
+    std::vector<Point> points(n);
 
-        v[i] = {ts1, ts2};
-    }
+    for (int i = 0; i < n; i++) 
+        std::cin >> points[i].x >> points[i].y;
 
-    std::sort(v.begin(), v.end(), [](const std::pair<int, int> &p1, const std::pair<int, int> &p2) {
-        return p1.first < p2.first;
+    std::sort(points.begin(), points.end(), [](const Point &lhs, const Point &rhs) {
+        return lhs.x < rhs.x;
     });
 
-    int min_length = getLength(v[0], v[1]);
-    int idx = 0;
+    std::set<Point> candidate = { points[0], points[1] }; 
+    int ans = dist(points[0], points[1]);
+    int pos = 0;
 
     for(int i = 2; i < n; i++) {
-        while (idx < i) {
-            int d = v[i].first - v[idx].first;
-            if(d * d <= min_length) break;
-            else {
-                v.erase(v.begin() + idx);
-                idx++;
+        while(pos < i) {
+            int dx = points[i].x - points[pos].x;
+            if (dx * dx > ans) {
+                candidate.erase(points[pos]);
+                pos++;
             }
+            else break;
         }
 
-        auto start = m.lower_bound((v[i].first - std::sqrt(min_length)));
-        auto end = m.upper_bound((v[i].first + std::sqrt(min_length)));
+        int d = (int)std::sqrt((double)ans)+1;
+        Point lower_bound = { -100001, points[i].y - d };
+        Point upper_bound = { 100001, points[i].y + d };
 
-        for(auto it = start; it != end; it++) {
-            min_length = std::min(min_length, getLength(v[i], { it->first, it->second }));
-        }
+        auto lower = candidate.lower_bound(lower_bound);
+        auto upper = candidate.upper_bound(upper_bound);
 
-        m.insert({ v[i].first, v[i].second });
+        for (auto it = lower; it != upper; it++)
+            ans = std::min(dist(points[i], *it), ans);
+
+        candidate.insert(points[i]);
     }
 
-    std::cout << min_length << "\n";
+    std::cout << ans;
 }
