@@ -63,6 +63,11 @@
         "random": "cpp",
         "regex": "cpp",
         "string_view": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "chrono": "cpp",
+        "condition_variable": "cpp",
+        "ratio": "cpp",
+        "fstream": "cpp",
+        "shared_mutex": "cpp"
     }
 }
