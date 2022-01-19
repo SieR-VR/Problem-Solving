@@ -68,6 +68,7 @@
         "condition_variable": "cpp",
         "ratio": "cpp",
         "fstream": "cpp",
-        "shared_mutex": "cpp"
+        "shared_mutex": "cpp",
+        "queue": "cpp"
     }
 }
