@@ -1,0 +1,1 @@
+cp ./scripts/template.c "./$1.c"
