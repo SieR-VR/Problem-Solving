@@ -1,0 +1,9 @@
+{
+    "github.copilot.enable": {
+        "*": "false"
+    },
+    "github.copilot.editor.enableAutoCompletions": false,
+    "files.associations": {
+        "stdio.h": "c"
+    }
+}
