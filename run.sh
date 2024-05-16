@@ -1,6 +1,12 @@
 #!/bin/sh
-echo "Choose a problem to run:" 
-FILE=$(gum choose $(ls . | grep -E '[0-9]+'))
+PROBLEM=$1
+
+if [ -z "$1" ]; then
+  echo "Choose a problem to run:"
+  FILE=$(gum choose $(ls . | grep -E '[0-9]+'))
+else
+  FILE=$1
+fi
 
 gcc -Wall -Wextra -o "dist/$FILE" "$FILE/$FILE.c" -lm
 
