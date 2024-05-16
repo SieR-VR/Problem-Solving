@@ -4,7 +4,7 @@
       "type": "cppbuild",
       "label": "build-active-file",
       "command": "./run.sh",
-      "args": ["${file}"],
+      "args": ["${fileBasenameNoExtension}"],
       "options": {
         "cwd": "${workspaceFolder}"
       },
